@@ -1,0 +1,3 @@
+fastapi
+uvicorn
+pyvis==0.3.1
