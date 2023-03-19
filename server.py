@@ -5,6 +5,7 @@ import pickle
 
 app = FastAPI()
 
+#load Knowledge base from the .pkl base
 def getKB(keyword):
     
     with open('relations.pkl', 'rb') as r:
@@ -31,7 +32,7 @@ def getKB(keyword):
             nodes.extend([r["head"], r["tail"]])
         return kb, nodes
 
-    
+#return the graph as html and save it to file.html
 def save_network_html(kb, nodes):
     # create network
     net = Network(directed=True, width="1500px", height="900px", bgcolor="#eeeeee")
