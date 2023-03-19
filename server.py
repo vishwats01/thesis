@@ -6,23 +6,30 @@ import pickle
 app = FastAPI()
 
 def getKB(keyword):
-    new_kb = []
-
-    with open('relations.pkl', 'rb') as r:
-       kb = pickle.load(r)
     
-    for each in kb:
-        if ((keyword.lower() in each['head'].lower()) or (keyword.lower() in each['tail'].lower())) and (each not in new_kb):
-            new_kb.append(each)
+    with open('relations.pkl', 'rb') as r:
+           kb = pickle.load(r)
+            
+    if keyword != "full":
+        new_kb = []
 
-    nodes = []
-    for r in new_kb:
-        nodes.extend([r["head"], r["tail"]])
+        for each in kb:
+            if ((keyword.lower() in each['head'].lower()) or (keyword.lower() in each['tail'].lower())) and (each not in new_kb):
+                new_kb.append(each)
 
-    #unique nodes to plot in the knowledge base
-    nodes = list(set(nodes))
+        nodes = []
+        for r in new_kb:
+            nodes.extend([r["head"], r["tail"]])
 
-    return new_kb, nodes
+        #unique nodes to plot in the knowledge base
+        nodes = list(set(nodes))
+
+        return new_kb, nodes
+    else:
+        nodes = []
+        for r in new_kb:
+            nodes.extend([r["head"], r["tail"]])
+        return kb, nodes
 
     
 def save_network_html(kb, nodes):
